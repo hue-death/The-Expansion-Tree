@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-128 -128 256 256">
+    <circle r="120" cx="0" cy="0" fill="black" stroke="#ffffff" stroke-width="5"/>
+    <circle r="30" cx="0" cy="-70" fill="#00d9ff" stroke="#00d9ffc0" stroke-width="5">
+    </circle>
+    <text x="-22.5" y="-64" font-family="Lucida Console" text-anchor="center" font-size="25">Ins</text>
+    <circle r="30" cx="-40" cy="20" fill="#8f8f8f" stroke="#8f8f8fc0" stroke-width="5"/>
+    <text x="-62.5" y="27.5" font-family="Lucida Console" text-anchor="center" font-size="25">???</text>
+    <circle r="30" cx="40" cy="20" fill="#8f8f8f" stroke="#8f8f8fc0" stroke-width="5"/>
+    <text x="17.5" y="27.5" font-family="Lucida Console" text-anchor="center" font-size="25">???</text>
+</svg>

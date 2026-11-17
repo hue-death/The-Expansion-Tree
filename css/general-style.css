@@ -5,13 +5,39 @@ body {
 	--background: #0f0f0f;
 	--color: #dfdfdf;
 	--points: #ffffff;
-	background: var(--background)
+	background: var(--background);
+	--test: linear-gradient(var(--color), var(--background), var(--points));
 }
 
+.test {
+	font-family: "Lucida Console", monospace;
+}
 /* General text */
 h1, h2, h3, b, input {
 	display: inline;
-	font-family: "Lucida Console", "Courier New", monospace
+	font-family:  "Verdana" ,"Lucida Console", "Courier New", monospace;
+}
+
+versionnum-massive {
+	font-size: 50px;
+	color: #0080ff
+}
+versionnum-major {
+	font-size: 30px;
+	color: #1e7a02
+}
+versionnum-minor {
+	font-size: 15px;
+}
+versionnum-smallupd {
+	font-size: 9px;
+}
+spoiler {
+	display: inline-block;
+	background:var(--color);
+	color: transparent;
+	border-radius: 2px;
+	user-select: none;
 }
 
 /* These are styles for different states of components. You can make layer-specific versions with .c.locked, for example */
@@ -40,8 +66,66 @@ h1, h2, h3, b, input {
 	background-color: #77bf5f;
 	cursor: default;
 }
+.m.bought:hover {
+	transform: scale(1.25, 1.25);
+	box-shadow: 0 0 30px #00d9ff
+}
+#newsticker {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	left: 5px;
+	height: 28px;
+	line-height: 18px;
+	padding: 0;
+	display: block;
+	background: var(--background);
+	border: 3px solid var(--color);
+	border-radius: 5px;
+	overflow: hidden;
+	user-select: none;
+}
+
+#newsticker > div {
+	position: absolute;
+	height: 18px;
+	top: 0px;
+	margin: 5px 10px;
+	width: max-content;
+	transition: transform linear .2s;
+}
+
+#newsticker > .new {
+	transition: none;
+}
+
+#newsticker ~ .col, #newsticker ~ .fullWidth {
+	top: 45px;
+	height: calc(100% - 45px);
+	min-height: calc(100% - 45px);
+	margin-top: 0px;
+}
+
+#newsticker a {
+	color: #02f2f2;
+}
+.dM {
+	color: black;
+	text-shadow: 0 0 10px #ffaa00;
+	border: 2px #ffaa00;
+}
 
 #points {
 	color: var(--points);
+	animation: whites 5s alternate infinite;
 	text-shadow: 0 0 10px var(--points);
 }
+
+	@keyframes whites {
+		0% {
+			color: #808080
+		}
+		100% {
+			color: #ffffff
+		}
+	}

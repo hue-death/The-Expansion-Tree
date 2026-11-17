@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-128 -128 256 256">
+    <circle r="120" cx="0" cy="0" fill="#00d9ff" stroke="#00d9ffc0" stroke-width="10"/>
+    <text x="-56" y="16" font-family="Lucida Console" text-anchor="center" font-size="64">Ins</text>
+</svg>
