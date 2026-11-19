@@ -18,14 +18,27 @@ let VERSION = {
 	name: "To The Planck Size!",
 }
 
+function getUndulatingColor(period = Math.sqrt(720)) {
+    let t = new Date().getTime()
+    let a = Math.sin(t / 1e3 / period * 2 * Math.PI + 0)
+    let b = Math.sin(t / 1e3 / period * 2 * Math.PI + 2)
+    let c = Math.sin(t / 1e3 / period * 2 * Math.PI + 4)
+    a = convertToB16(Math.floor(a * 128) + 128)
+    b = convertToB16(Math.floor(b * 128) + 128)
+    c = convertToB16(Math.floor(c * 128) + 128)
+    return "#" + String(a) + String(b) + String(c)
+}
+
 function test(input) {
     
 }
 let changelog = `<h1>Changelog:</h1><br>
 <div class="x24axas 783ysad 472dusa" data-bind="true" id="changelog-container">
     <versionnum-major>v0.2</versionnum-major><br>
+	- Added ${spoil('Dark Matter', "String")}, 5 Upgrades in it.<br>
 	- Added ${spoil('Planck Power', "String")}<br>
-	- Added 1 more mini-layer.<br>
+	- Added Achievements.<br>
+	- <strike>Added 1 more mini-layer.</strike> not yet.<br>
 	- Added some upgrades in ${spoil('Instances', "String")}<br>
 	- Added 2 Buyables.<br>
 	- Added 3 Milestones.<br>
@@ -125,6 +138,7 @@ function getPointGen() {
 	}
 	if (tmp['A5$'].plEf.gt(1))gain=gain.pow(tmp['A5$'].plEf)
 
+	gain=gain.mul(tmp['A5$'].dMEf2)
 	return gain
 }
 
@@ -137,12 +151,19 @@ function addedPlayerData() { return {
 // Display extra things at the top of the page
 var displayThings = [
 	() => {
+		let a = getUndulatingColor()
+		let b = oM(`1e860`)
+		let c = colorText("h2", a, format(b))
+		let d = `Current Endgame: `+c+` points. (v0.2)`
+		return d
+	},
+	() => {
 		return options.paused?`<h4 style="color: #00d9ff"; text-shadow: 0 0 10px #00d9ff !important>The Game Is Paused.</h4>`:""
 	}
 ]
 // Determines when the game "ends"
 function isEndgame() {
-		return player.points.gte('1ee10');
+		return player.points.gte('1e860');
 }
 
 

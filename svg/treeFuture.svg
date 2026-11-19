@@ -1,5 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-128 -128 256 256">
     <circle r="120" cx="0" cy="0" fill="black" stroke="#ffffff" stroke-width="5"/>
+    <rect height="100" width="10" x="-30" y="-50" fill="#ffffff" transform="rotate(25)"/>
+    <rect height="100" width="10" x="20" y="-80" fill="#ffffff" transform="rotate(-25)"/>
     <circle r="30" cx="0" cy="-70" fill="#00d9ff" stroke="#00d9ffc0" stroke-width="5">
     </circle>
     <text x="-22.5" y="-64" font-family="Lucida Console" text-anchor="center" font-size="25">Ins</text>

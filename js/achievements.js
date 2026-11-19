@@ -127,6 +127,12 @@ addLayer('#^a', {
             tooltip: "Reach "+format("1.79762e308")+" points.<br>Reward: 3 AP",
             onComplete() {return player[l].points = player[l].points.add(3)}
         },
+        24: {
+            name: "<span id='ach-name'>Dark Atom</span>",
+            done() {return player['A5$'].dM.gte(1)},
+            tooltip: "Get "+formatWhole(1)+" Dark Matter.<br>Reward: 4 AP",
+            onComplete() {return player[l].points = player[l].points.add(4)}
+        },
         1001: {
             name: "<span id='ach-name' onclick='complete(1001)'>This one is always free.</span>",
             done() {return hasAchievement(l, 1001)},

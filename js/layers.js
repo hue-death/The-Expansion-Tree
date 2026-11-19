@@ -8,6 +8,10 @@ var plBuyable = {
   background: "linear-gradient(#ffffff, #888888, #000000)",
   "border-color": "#888888"
 }
+var dMUpg = {
+  background: "linear-gradient(#000000, #886600, #000000)",
+  "border-color": "#886600"
+}
 function oM(val) {
   return new OmegaNum(val);
 }
@@ -90,6 +94,9 @@ function tF() {
 function uE(l, d) {
   return upgradeEffect(l, d);
 }
+function uE2(l, d) {
+  return upgradeEffect2(l, d)
+}
 function hU(l, d) {
   return hasUpgrade(l, d);
 }
@@ -141,6 +148,9 @@ addLayer('A5$', {
     if (hM('A5$', 0)) {
       e = e.mul(tmp['A5$'][s[2]][22].effect.pow(tmp['A5$'].efficiency))
     }
+    if (hU('A5$', 1005)) {
+      e = e.mul(uE('A5$', 1005))
+    }
     return e;
   },
   gainExp() {
@@ -149,6 +159,12 @@ addLayer('A5$', {
   },
   dMm() {
     var m = oM(1)
+    if (hU('A5$', 1002)) {
+      m = m.mul(uE('A5$', 1002))
+    }
+    if (hU('A5$', 1004)) {
+      m = m.mul(uE('A5$', 1004))
+    }
     return m
   },
   dME() {
@@ -166,6 +182,21 @@ addLayer('A5$', {
     var g = OmegaNum.pow(b, player["A5$"].dM).mul(m).pow(e).sub(1)
     return g
   },
+  dMEf1() {
+    var b=player['A5$'].diM.add(1).pow(0.4)
+    return b
+  },
+  dMEf2() {
+    var b=player['A5$'].diM.add(1).pow(0.5)
+    if (hU('A5$', 1005)) {
+      b=b.pow(8.5)
+    }
+    return b
+  },
+  dMEf3() {
+    var b=player['A5$'].diM.add(10).log10().pow(0.2)
+    return b
+  },
   plEf() {
     var b = player['A5$'].plP.add(10).log10().pow(0.1)
     if (b.gte(1.1)) {
@@ -177,6 +208,10 @@ addLayer('A5$', {
     var b = player['A5$'].plP.add(1).pow(1.5)
     return b
   },
+  plEf3() {
+    var b = tmp['A5$'].plEf2.pow(0.2)
+    return b
+  },
   efficiency() {
     var eff = oM(0.1)
     return eff.min(1)
@@ -185,7 +220,7 @@ addLayer('A5$', {
   [mT()]: {
     main: {
       "Main": {
-        content: ['upgrades']
+        content: [['upgrades', [1, 2, 3, 4, 5]]]
       },
       "The Depth tree": {
         [Du[5]]() {
@@ -219,7 +254,8 @@ addLayer('A5$', {
           var a = player['A5$'].plP
           var b = tmp['A5$'].plEf
           var d = tmp['A5$'].plEf2
-          var c = "You Have " + colorText('h2', getWhiteColors(), format(a)) + " Planck Power. Which Raises points by ^" + colorText('h2', getWhiteColors(), format(b)) + " And Multiplies Instances by " + colorText('h2', getWhiteColors(), format(d)) + "x (Hold shift to see the Effect formula)"
+          var e = tmp['A5$'].plEf3
+          var c = "You Have " + colorText('h2', getWhiteColors(), format(a)) + " Planck Power. Which Raises points by ^" + colorText('h2', getWhiteColors(), format(b)) + " And Multiplies Instances by " + colorText('h2', getWhiteColors(), format(d)) + "x"+(hU('A5$', 1003)?", And Multiplies Energy Before Softcap by "+colorText("h2",getWhiteColors(),format(e))+"x.":"")+" (Hold shift to see the Effect formula)"
           var d = shiftDown ? "<br>Effect 1: log<sup>2.000</sup>(x)<sup>0.100</sup>, Effect 2: x<sup>1.5</sup>" : ""
           return c + d
         }],
@@ -241,8 +277,11 @@ addLayer('A5$', {
             var a = player["A5$"].dM
             var b = tmp['A5$'].dMG // not dmg bro
             var e = player['A5$'].diM // not dims bro
+            var f = tmp['A5$'].dMEf1
+            var g = tmp['A5$'].dMEf2
+            var h = tmp['A5$'].dMEf3
             var c = "You have <h2 class='dM'>"+formatWhole(a)+"</h2> Dark Matter. which produces <h2 class='dM'>"+format(b)+"</h2> Dilated Matter."
-            var d = "<br><br>You have <h2 class='dM'>"+format(e)+"</h2> Dilated Matter, which does nothing right now."
+            var d = "<br><br>You have <h2 class='dM'>"+format(e)+"</h2> Dilated Matter, which Multiplies Energy before Softcap by <h2 class='dM'>"+format(f)+"</h2>x, Multiplies Points After Exponent by <h2 class='dM'>"+format(g)+"</h2>x, And Multiplies Planck Power Gain Base Before Exponent by <h2 class='dM'>"+format(h)+"</h2>x"
             return c+d
           }],
           ['blank', 2],
@@ -264,6 +303,7 @@ addLayer('A5$', {
     if (hM('A5$', 2)) {
       m = m.mul(2.5)
     }
+    m = m.mul(tmp['A5$'].dMEf3)
     return m
   },
   plMbE() {
@@ -278,6 +318,12 @@ addLayer('A5$', {
     }
     if (hM('A5$', 2)) {
       e = e.add(1)
+    }
+    if (hU('A5$', 1002)) {
+      e = e.add(uE2('A5$', 1002))
+    }
+    if (hU('A5$', 1003)) {
+      e = e.add(2)
     }
     return e
   },
@@ -301,6 +347,7 @@ addLayer('A5$', {
       else player['A5$'][s[2]][11] = player['A5$'][s[2]][11].add(tmp['A5$'][s[2]][11].pG.mul(d / 20));
     }
     player['A5$'].plP = player['A5$'].plP.add(tmp['A5$'].plG.mul(d))
+    player['A5$'].diM = player['A5$'].diM.add(tmp['A5$'].dMG.mul(d))
   },
   hotkeys: [{
     key: "i",
@@ -367,6 +414,9 @@ addLayer('A5$', {
         ;
         if (uE('A5$', this.id).gte(1e8)) {
           b = b.pow(0.25).mul(oM(1e8).pow(0.75));
+        }
+        if (hU('A5$', 1001)) {
+          b = b.pow(uE('A5$', 1001))
         }
         ;
         return b;
@@ -463,7 +513,7 @@ addLayer('A5$', {
     23: {
       [Du[0]]: "The Challenging Power",
       [Du[1]]: "<span style='font-size: 8px'>Reduce the scaling For Compressors, Unlock a Challenge after `not defined` amt of smth.</span>",
-      [Du[2]]: oM(1e250),
+      [Du[2]]: oM(`1e450`),
       currencyLocation() {
         return player['A5$'][s[2]];
       },
@@ -537,6 +587,126 @@ addLayer('A5$', {
       [Du[5]]() {
         return hM('A5$', 0)
       }
+    },
+    1001: {
+      [Du[0]]: "Exponential Dilation",
+      [Du[1]]: "Raise \"Weaking Requirements\" based on Dilated Matter",
+      [Du[2]]: oM(6.25e3),
+      [Du[3]](){
+        var b=player['A5$'].diM.add(10).log10().pow(0.09)
+        if (b.gte(1.3)){/*nothing until smth.*/}
+        return b
+      },
+      [Du[4]](){
+        var e=uE('A5$', 1001)
+        var d="^"+format(e)
+        return d
+      },
+      currencyDisplayName: "Dilated Matter",
+      currencyInternalName: "diM",
+      currencyLayer: "A5$",
+      style() {
+        if (!hU('A5$', this.id)) { 
+        return player['A5$'].diM.gte(this.cost)?{...dMUpg}:""
+        } else return ""
+      }
+    },
+    1002: {
+      [Du[0]]: "Dilated Energy",
+      [Du[1]]: "Multiply Dilated Matter based on Energy, Add to Planck Power Gain Exponent based on Dilated Matter.",
+      [Du[2]]: oM(8e3),
+      [Du[3]](){
+        var d=player['A5$'][s[2]][11].add(10).log10().div(10).add(0.9).max(1).pow(0.75)
+        return d
+      },
+      [Du[3]+"2"](){
+        var b=player['A5$'].diM.add(1).log10().pow(0.5).div(4)
+        return b
+      },
+      [Du[4]](){
+        var e=uE('A5$', 1002)
+        var e2=uE2('A5$', 1002)
+        var d=format(e)+"x, +"+format(e2)
+        return d
+      },
+      currencyDisplayName: "Dilated Matter",
+      currencyInternalName: "diM",
+      currencyLayer: "A5$",
+      [Du[5]]() {
+        return hU('A5$', 1001)
+      },
+      style() {
+        if (!hU('A5$', this.id)) { 
+        return player['A5$'].diM.gte(this.cost)?{...dMUpg}:""
+        } else return ""
+      }
+    },
+    1003: {
+      [Du[0]]: "Planck Energy",
+      [Du[1]]: "Add 2 to the Exponent of base Planck Power Gain, Multiply Energy gain based on the Second Effect of Planck Power<sup>0.2</sup>",
+      [Du[2]]: oM(25e3),
+      currencyDisplayName: "Dilated Matter",
+      currencyInternalName: "diM",
+      currencyLayer: "A5$",
+      [Du[5]]() {
+        return hU('A5$', 1002)
+      },
+      style() {
+        if (!hU('A5$', this.id)) { 
+        return player['A5$'].diM.gte(this.cost)?{...dMUpg}:""
+        } else return ""
+      }
+    },
+    1004: {
+      [Du[0]]: "Compressed Compressors",
+      [Du[1]]: "Multiply Compressors' Base by 1.1x, Multiply Dilated Matter Based on Compressors.",
+      [Du[2]]: oM(2e6),
+      currencyDisplayName: "Dilated Matter",
+      currencyInternalName: "diM",
+      currencyLayer: "A5$",
+      [Du[3]](){
+        var eb = oM(1.1)
+        var b=OmegaNum.pow(eb,player['A5$'][s[2]][21].pow(0.8))
+        return b
+      },
+      [Du[4]](){
+        var e=uE('A5$', 1004)
+        var d=format(e)+"x"
+        return d
+      },
+      [Du[5]]() {
+        return hU('A5$', 1003)
+      },
+      style() {
+        if (!hU('A5$', this.id)) { 
+        return player['A5$'].diM.gte(this.cost)?{...dMUpg}:""
+        } else return ""
+      }
+    },
+    1005: {
+      [Du[0]]: "Dilated Instances",
+      [Du[1]]: "<span style='font-size: 8px'>Multiply Instances Based on Dilated Matter, And Improve Dilated Matter Effect 2, Unlocks the <h4 style='font-weight: bold'>THIRD ROW 1 NODE.</h4></span>",
+      [Du[2]]: oM(10e6),
+      currencyDisplayName: "Dilated Matter",
+      currencyInternalName: "diM",
+      currencyLayer: "A5$",
+      [Du[3]](){
+        var b = player['A5$'].diM.pow(5)
+        return b
+      },
+      [Du[4]](){
+        var e=uE('A5$', 1005)
+        var d=format(e)+"x"
+        return d
+      },
+      [Du[5]]() {
+        return hU('A5$', 1004)
+      },
+      style() {
+        if (!hU('A5$', this.id)) { 
+        return player['A5$'].diM.gte(this.cost)?{...dMUpg}:""
+        } else return ""
+      }
     }
   },
   [s[2]]: {
@@ -571,6 +741,10 @@ addLayer('A5$', {
         m = m.mul(tmp['A5$'][s[2]][21].effect);
         if (hU('A5$', 32)) { m = m.mul(5) }
         if (hU('A5$', 42)) m = m.mul(uE('A5$', 42));
+        m = m.mul(tmp['A5$'].dMEf1)
+        if (hU('A5$', 1003)) {
+          m = m.mul(tmp['A5$'].plEf3)
+        }
         return m;
       },
       pG() {
@@ -652,6 +826,9 @@ addLayer('A5$', {
         var eB = oM(1.5);
         if (hU('A5$', 32)) {
           eB = eB.add(uE('A5$', 32))
+        }
+        if (hU('A5$', 1004)) {
+          eB = eB.mul(1.1)
         }
         var e = OmegaNum.pow(eB, x);
         return e;
@@ -874,8 +1051,12 @@ addLayer('A5$', {
         var d = "<h3>Reset For <h2>+"+formatWhole(g)+"</h2><h3> Dark Matter</h3><br><br>Next: "+format(cur)+" / "+format(n)+" Planck Power</h3>"
         return d
       },
+      bSc() {
+        var b=oM(1e20)
+        return b
+      },
       canClick() {
-        var bSc = oM(1e10)
+        var bSc = this.bSc()
         var bEx = oM(1.75)
         var m=tmp['A5$'][s[4]][this.id].pM
         var e=tmp['A5$'][s[4]][this.id].pE
@@ -894,7 +1075,7 @@ addLayer('A5$', {
         var e=this.pE()
         var r=oM(1e44)
         var bEx = oM(1.75)
-        var b=oM(1e10)
+        var b=this.bSc()
         var mg=player['A5$'].plP.div(r).log().div(Math.log(b)).root(bEx).mul(m).pow(e).floor()
         var g=oM(1).mul(m).pow(e)
         if (hU('A5$', 1101)) {
@@ -906,22 +1087,21 @@ addLayer('A5$', {
         var e=this.pE()
         var r=oM(1e44)
         var bEx = oM(1.75)
-        var b=oM(1e10)
-        var mg=OmegaNum.pow(b, (player['A5$'].plP.div(r).log().div(Math.log(b)).floor()).add(1).pow(bEx).div(m).root(e))
-        var g=OmegaNum.pow(b, player['A5$'].dM.pow(bEx).div(m).root(e)).mul(r)
+        var b=this.bSc()
+        var mg=OmegaNum.pow(b, (player['A5$'].plP.div(r).log().div(Math.log(b)).floor()).add(1).pow(bEx).div(m).root(e)).mul(r).max(r)
+        var g=OmegaNum.pow(b, player['A5$'].dM.pow(bEx).div(m).root(e)).mul(r).max(r)
         if (hU('A5$', 1101)) {
           return mg
         } else return g
       },
       onClick() {
-        if (confirm('Are you sure to do this? you\'ll lose most resources!')) {
           player['A5$'][s[2]][11] = oM(0)
           player['A5$'][s[2]][1001] = oM(0)
           player['A5$'][s[2]][1002] = oM(0)
           player['A5$'].plP = oM(0)
           player['A5$'].points = oM(0)
-          player['A5$'].ryrwrwiuowyr
-        }
+          player.points = oM(0)
+          player['A5$'].dM = player['A5$'].dM.add(this.pG())
       },
       style() {
         return {
